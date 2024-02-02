@@ -20,10 +20,10 @@ errorEmitter.on("SYS", ({ code, msg }) => {
   console.error(`system error: `, logString);
 });
 
-errorEmitter.on("NETWORK", ({ code, ip, method, msg }) => {
+errorEmitter.on("NETWORK", ({ code, msg, method, ip, id }) => {
   const { verboseTime } = dateTimeMs();
 
-  const logString = `${verboseTime}\t${code}\t${ip}\t${method}\t${msg}`;
+  const logString = `${verboseTime}\t${code}\t${ip}\t${id}\t${method}\t${msg}`;
   appendFileAsync(networkLogFilePath, logString + "\n");
 
   console.error(`network error: `, logString);
@@ -32,8 +32,8 @@ errorEmitter.on("NETWORK", ({ code, ip, method, msg }) => {
 const logSystemErr = ({ code, msg }) => {
   errorEmitter.emit("SYS", { code, msg });
 };
-const logNetworkErr = ({ code, msg, method, ip }) => {
-  errorEmitter.emit("NETWORK", { code, msg, method, ip });
+const logNetworkErr = (obj) => {
+  errorEmitter.emit("NETWORK", { ...obj });
 };
 
 module.exports = { errorEmitter, logSystemErr, logNetworkErr };

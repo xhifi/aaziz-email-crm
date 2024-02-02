@@ -5,5 +5,15 @@ const deleteSubscriber = require("./deleteSubscriber");
 const unsubSubscriber = require("./unsubSubscriber");
 const getAllSubscribers = require("./getAllSubscribers");
 const tagSubscriber = require("./tagSubscriber");
+const addSubscriberCsv = require("./addSubscriberCsv");
 
-module.exports = { addSubscriber, updateSubscriber, getSubscriber, deleteSubscriber, unsubSubscriber, getAllSubscribers, tagSubscriber };
+module.exports = {
+  addSubscriber,
+  updateSubscriber,
+  getSubscriber,
+  deleteSubscriber,
+  unsubSubscriber,
+  getAllSubscribers,
+  tagSubscriber,
+  addSubscriberCsv,
+};

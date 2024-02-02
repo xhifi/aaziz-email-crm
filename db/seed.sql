@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS subscribers (
     subscriber_id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
+    title TEXT CHECK(title IN ('mr', 'mrs', 'ms')),
     email TEXT UNIQUE NOT NULL CHECK (email ~* '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'),
     engagement_status VARCHAR(20) CHECK (engagement_status IN ('engaged', 'disengaged', 'potential')),
     department VARCHAR(10) CHECK (department IN ('01', '02', '04', 'payroll')),
@@ -47,7 +48,7 @@ FOR EACH ROW
 EXECUTE FUNCTION update_subscription_status();
 
 -- Create a view that contains all the data for subscribers as well as the tags assigned to each user in an array
-CREATE VIEW subscriber_tags_view AS
+CREATE OR REPLACE VIEW subscriber_tags_view AS
 SELECT
     subscribers.*,
     COALESCE(ARRAY_AGG(tags.tag_name), '{}'::text[]) AS tag_names

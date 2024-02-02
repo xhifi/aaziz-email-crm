@@ -15,8 +15,10 @@ const pool = new pg.Pool({
 
 const seed = fs.readFileSync(sqlPath).toString();
 pool.query(seed, (err, res) => {
-  if (err) {
-    console.log(err.message);
+  if (err?.code === "ECONNREFUSED") {
+    throw new Error(`Connection Refused by Database Host`);
+  } else {
+    console.log(err?.message);
   }
   console.log(`DATABASE CONNECTED | Seeding done`);
 });
